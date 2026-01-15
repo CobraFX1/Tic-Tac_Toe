@@ -52,7 +52,7 @@ const GameController = (function () {
     let gameOver = false;
     const players = [
         Player("Player1", "X"),
-        Player("Player2", "X")
+        Player("Player2", "O")
     ];
     let activePlayer = players[0];
     const switchPlayer = () => {
@@ -69,16 +69,15 @@ const GameController = (function () {
                 Gameboard.resetBoard();
             };
             if ((Gameboard.placeMark(position, activePlayer.mark)) === true) {
-                console.log(Gameboard.getBoard())
                 const win = (Gameboard.checkWinner(activePlayer.mark) == true);
                 if (win || (Gameboard.checkTie() == true)) {
                     if (win) {
                         gameOver = true;
-                        console.log(`${activePlayer.name} is the winner!`);
+                        displayController.result(`${activePlayer.name}`);
                         return;
                     } else {
                         gameOver = true;
-                        console.log("This round is a draw");
+                        displayController.result("");
                         return;
                     }
                 } else {
@@ -119,13 +118,13 @@ const displayController = (function () {
     const cellsList = document.querySelectorAll(".cell");
     const resetBtn = document.querySelector("button");
     const turnIndicator = document.querySelector(".turn");
+    const closeBtn = document.createElement("button");
+    const dialog = document.querySelector("#winDialog");
 
     const bindEvents = () => {
         container.addEventListener('click', (event) => {
             const clickedCell = event.target.closest('.cell');
-
             if (!clickedCell || clickedCell.textContent !== "") return;
-
             const index = clickedCell.dataset.index;
             GameController.playRound(index);
             render();
@@ -135,14 +134,44 @@ const displayController = (function () {
             turnIndicator.textContent = `${GameController.getActivePlayer().name}'s turn`;
             render();
         });
+        closeBtn.addEventListener('click', () => {
+            Gameboard.resetBoard();
+            turnIndicator.textContent = `${GameController.getActivePlayer().name}'s turn`;
+            render();
+            dialog.close();
+        });
     };
     const render = () => {
         const currentBoard = Gameboard.getBoard();
         cellsList.forEach((cell, index) => {
             cell.textContent = currentBoard[index];
+
+            cell.classList.remove('x-mark', 'o-mark');
+            if (currentBoard[index] !== "") {
+                cell.classList.add(`${currentBoard[index].toLowerCase()}-mark`);
+            }
             turnIndicator.textContent = `${GameController.getActivePlayer().name}'s turn`;
         });
     }
+    const result = (name) => {
+        let message = document.createElement("p");
+        message.classList.add("message");
+        closeBtn.classList.add("closeDialog");
+        closeBtn.textContent = "Cancel";
+        let container = document.createElement("div");
+
+        if (name == "") {
+            message.textContent = "This round ends at a tie";
+        } else {
+            message.textContent = `${name} is the winner`;
+        }
+        container.append(message, closeBtn);
+        dialog.append(container);
+        dialog.showModal();
+    }
     bindEvents();
-    return { render };
+    return {
+        render,
+        result,
+    };
 })();

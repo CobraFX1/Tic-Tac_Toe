@@ -50,7 +50,12 @@ body {
     transition: all 0.2s ease;
     border: 2px solid transparent;
 }
-
+.o-mark {
+    color: red;
+}
+.x-mark{
+    color: blue;
+}
 .cell:hover {
     background-color: #e2e8f0;
     transform: translateY(-2px);
@@ -98,4 +103,43 @@ button {
 button:hover {
     background-color: #dc2626;
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+/* Dialog designs */
+#winDialog {
+    position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  border: none;
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px; 
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+#winDialog div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#winDialog p {
+  margin-top: 0;
+  color: #2c3e50;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 10px;
+}
+#winDialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px); /* Modern blur effect */
+}
+.closeDialog {
+  flex: 1;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
 }
