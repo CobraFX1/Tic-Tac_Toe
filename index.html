@@ -9,9 +9,14 @@
 </head>
 
 <body>
+    <div class="setup-container">
+        <input type="text" id="p1" placeholder="The first player's name">
+        <input type="text" id = "p2" placeholder="The second player's name">
+        <button id="start">Start</button>
+    </div>
     <dialog id="winDialog">
     </dialog>
-    <div class="container">
+    <div class="container hide">
         <div class="cell" data-index="0"></div>
         <div class="cell" data-index="1"></div>
         <div class="cell" data-index="2"></div>
@@ -22,9 +27,9 @@
         <div class="cell" data-index="7"></div>
         <div class="cell" data-index="8"></div>
     </div>
-    <div class="buttonCnt">
+    <div class="buttonCnt hide">
         <button>Reset</button>
-        <div class="turn">PLAYER1'S TURN</div>
+        <div class="turn"></div>
     </div>
     <script src="script.js">
     </script>

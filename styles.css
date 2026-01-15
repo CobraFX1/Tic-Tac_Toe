@@ -23,7 +23,6 @@ body {
     flex-direction: column;
     gap: 30px;
 }
-
 /* The Board */
 .container {
     background-color: white;
@@ -68,7 +67,7 @@ body {
 /* Controls Section */
 .buttonCnt {
     display: grid;
-    grid-template-columns: 180px 130px;
+    grid-template-columns: 180px max-content;
     gap: 20px;
     align-items: stretch;
 }
@@ -86,6 +85,12 @@ body {
     align-items: center;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+    /* The critical lines */
+    white-space: nowrap;      /* Shrink-wrap to text */
+    padding: 0 20px;       /* Add side space so text isn't touching edges */
+    justify-self: center;    /* Keeps it centered in its grid column */
+    min-width: 130px;
 }
 
 /* Reset Button */
@@ -118,7 +123,7 @@ button:hover {
   max-width: 400px; 
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
-#winDialog div {
+.big {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -134,7 +139,7 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px); /* Modern blur effect */
 }
-.closeDialog {
+.closeDialog{
   flex: 1;
   background-color: #e74c3c;
   color: white;
@@ -142,4 +147,75 @@ button:hover {
   padding: 12px;
   border-radius: 6px;
   cursor: pointer;
+}
+#playAgain {
+    flex: 1;
+  background-color: #503ce7;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.mini {
+    display: flex;
+    flex: 1;
+    gap:40px;
+}
+/* Center the setup container on the screen */
+.setup-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 350px; /* Keeps it from getting too wide */
+    text-align: center;
+}
+
+/* Style the text inputs */
+.setup-container input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Highlight input when clicking into it */
+.setup-container input:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* The Start Button */
+#start {
+    background-color: var(--accent-blue);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#start:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+#start:active {
+    transform: scale(0.98);
+}
+
+.hide {
+    display: none;
 }

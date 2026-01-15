@@ -50,17 +50,22 @@ const Player = (name, mark) => {
 };
 const GameController = (function () {
     let gameOver = false;
-    const players = [
-        Player("Player1", "X"),
-        Player("Player2", "O")
-    ];
-    let activePlayer = players[0];
+    let players = [];
+    let activePlayer;
+    const initPlayers = (name1, name2) => {
+        players = [
+            Player(name1 || "Player1", "X"),
+            Player(name2 || "Player2", "O")
+        ];
+        activePlayer = players[0];
+    };
     const switchPlayer = () => {
         activePlayer = (activePlayer === players[0]) ? players[1] : players[0];
     };
     const reset = () => {
         activePlayer = players[0];
-    }
+    };
+
     return {
         playRound: (position) => {
             if (gameOver == true) {
@@ -90,6 +95,7 @@ const GameController = (function () {
         },
         getActivePlayer: () => activePlayer,
         reset,
+        initPlayers,
     };
 })();
 
@@ -120,6 +126,13 @@ const displayController = (function () {
     const turnIndicator = document.querySelector(".turn");
     const closeBtn = document.createElement("button");
     const dialog = document.querySelector("#winDialog");
+    const input1 = document.querySelector("#p1");
+    const input2 = document.querySelector("#p2");
+    const startBtn = document.querySelector('#start');
+    const setupCont = document.querySelector(".setup-container");
+    const btnCont = document.querySelector(".buttonCnt");
+    const playAgain = document.createElement("button");
+
 
     const bindEvents = () => {
         container.addEventListener('click', (event) => {
@@ -140,12 +153,29 @@ const displayController = (function () {
             render();
             dialog.close();
         });
+        startBtn.addEventListener('click', () => {
+            setupCont.classList.add('hide');
+            btnCont.classList.remove('hide');
+            container.classList.remove('hide');
+
+            GameController.initPlayers(input1.value, input2.value);
+            render();
+        });
+        playAgain.addEventListener('click', () => {
+            input1.value = "";
+            input2.value = "";
+            Gameboard.resetBoard();
+            render();
+            dialog.close();
+            setupCont.classList.remove('hide');
+            btnCont.classList.add('hide');
+            container.classList.add('hide');
+        });
     };
     const render = () => {
         const currentBoard = Gameboard.getBoard();
         cellsList.forEach((cell, index) => {
             cell.textContent = currentBoard[index];
-
             cell.classList.remove('x-mark', 'o-mark');
             if (currentBoard[index] !== "") {
                 cell.classList.add(`${currentBoard[index].toLowerCase()}-mark`);
@@ -154,18 +184,25 @@ const displayController = (function () {
         });
     }
     const result = (name) => {
+        dialog.textContent = "";
         let message = document.createElement("p");
         message.classList.add("message");
         closeBtn.classList.add("closeDialog");
         closeBtn.textContent = "Cancel";
+        playAgain.classList.add("#playAgain")
+        playAgain.textContent = "Play Again"
         let container = document.createElement("div");
+        container.classList.add("big");
+        let miniContainer = document.createElement("div");
+        miniContainer.classList.add("mini");
 
         if (name == "") {
             message.textContent = "This round ends at a tie";
         } else {
             message.textContent = `${name} is the winner`;
         }
-        container.append(message, closeBtn);
+        miniContainer.append(closeBtn, playAgain);
+        container.append(message, miniContainer);
         dialog.append(container);
         dialog.showModal();
     }
