@@ -1,0 +1,101 @@
+/* Modern Root Variables for easy customization */
+:root {
+    --bg-light: #f8fafc;
+    --accent-blue: #3b82f6;
+    --accent-red: #ef4444;
+    --text-main: #1e293b;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* The Board */
+.container {
+    background-color: white;
+    padding: 15px;
+    border-radius: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 15px;
+    box-shadow: var(--shadow);
+}
+
+/* Individual Tiles */
+.cell {
+    background-color: #f1f5f9;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.cell:hover {
+    background-color: #e2e8f0;
+    transform: translateY(-2px);
+}
+
+.cell:active {
+    transform: scale(0.95);
+}
+
+/* Controls Section */
+.buttonCnt {
+    display: grid;
+    grid-template-columns: 180px 130px;
+    gap: 20px;
+    align-items: stretch;
+}
+
+/* Status Indicator */
+.turn {
+    color: white;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Reset Button */
+button {
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background-color: var(--accent-red);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
